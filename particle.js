@@ -6,7 +6,7 @@ function Particle() {
     this.maxspeed = 1;
     this.vel = createVector(0,0);
     this.prevPos = this.pos.copy();
-    this.h = 
+    this.color
 
 
     this.update = function() {
@@ -27,18 +27,24 @@ function Particle() {
 
     this.applyForce = function (force) {
         this.acc.add(force)
-
     }
 
     this.show = function() {
-        stroke(0, noise(zoff)*20);
-        strokeWeight(2)
-        line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y)
+        if (this.color === "erase") {
+            erase()
+            strokeWeight(1)
+            line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y)
+            noErase()
+        } else {
+            stroke(this.color)
+            strokeWeight(1)
+            line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y)
+        }
     }
 
     this.edges = function () {
-        if (this.pos.x > width) this.pos.x = random(width/4, 3 * width/4);
-        if (this.pos.x < 0) this.pos.x = random(width/4, 3 * width/4);
+        if (this.pos.x > width) this.pos.x = 0;
+        if (this.pos.x < 0) this.pos.x = width;
         if (this.pos.y > height) this.pos.y = 0;
         if (this.pos.y < 0) this.pos.y = height;
         
